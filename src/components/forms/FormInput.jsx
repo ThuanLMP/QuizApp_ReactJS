@@ -3,20 +3,22 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+
+import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useFormik } from 'formik'
-import { SignupSchema } from '../../utils/helpers/validate'
+import { SignupSchema, SigninSchema, ForgotPasswordSchema } from '../../utils/helpers/validate'
 
 
-const theme = createTheme();
+
 
 export default function FormInput({ typeForm }) {
 
+    const navigate = useNavigate()
     let initValue = {}
     let listInput = []
 
@@ -42,17 +44,22 @@ export default function FormInput({ typeForm }) {
         listInput = ['email']
     }
 
-
     const formik = useFormik({
         initialValues: initValue,
         onSubmit: values => {
             console.log(values)
+
         },
-        validationSchema: SignupSchema
+        onChange: values =>{
+            console.log(values)
+        },
+        validationSchema: typeForm === 'Sign in' ? SigninSchema : (typeForm=== 'Sign up' ? SignupSchema : ForgotPasswordSchema)
     })
 
+
+
     return (
-        <ThemeProvider theme={theme}>
+        
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -69,7 +76,7 @@ export default function FormInput({ typeForm }) {
                     <Typography component="h1" variant="h5">
                         {typeForm}
                     </Typography>
-                    <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
 
                         {listInput.map((val) => {
                             return (
@@ -88,7 +95,12 @@ export default function FormInput({ typeForm }) {
                                         autoComplete={val}
                                     />
 
-
+                                    {formik.errors.email && formik.touched.email && (
+                                        <span className="error">{formik.errors.email}</span>
+                                    )}
+                                    {formik.errors.password && formik.touched.password && (
+                                        <span className="error">{formik.errors.password}</span>
+                                    )}
                                 </>
                             )
                         })}
@@ -103,41 +115,37 @@ export default function FormInput({ typeForm }) {
                             {typeForm}
                         </Button>
 
-                        <Grid container>
-                            {
-                                typeForm === 'Sign in' || typeForm === 'Sign up' ?
-                                    (
-                                        <Grid item xs>
-                                            <Link href="#" variant="body2">
-                                                Forgot password?
-                                            </Link>
-                                        </Grid>
-                                    ) : null
-                            }
-
-
-                            {
-                                typeForm === 'Sign up' ?
-                                    (
-                                        <Grid item>
-                                            <Link href="#" variant="body2">
-                                                {"Have an account? Sign in"}
-                                            </Link>
-                                        </Grid>
-                                    ) : (
-
-                                        <Grid item>
-                                            <Link href="#" variant="body2">
-                                                {"Don't have an account? Sign Up"}
-                                            </Link>
-                                        </Grid>
-                                    )
-                            }
-
-                        </Grid>
                     </Box>
+
+                    <Grid container>
+                        {
+                            typeForm === 'Sign in' || typeForm === 'Sign up' ?
+                                (
+                                    <Grid item xs>
+                                        <Link to="/forgotpassword" >Forgot password</Link>
+                                    </Grid>
+                                ) : null
+                        }
+
+
+                        {
+                            typeForm === 'Sign up' ?
+                                (
+                                    <Grid item>
+
+                                        <Link to="/" >Have an account? Sign in</Link>
+                                    </Grid>
+                                ) : (
+
+                                    <Grid item>
+                                        <Link to="/register" >Don't have an account? Sign Up</Link>
+                                    </Grid>
+                                )
+                        }
+
+                    </Grid>
                 </Box>
             </Container>
-        </ThemeProvider>
+      
     );
 }
