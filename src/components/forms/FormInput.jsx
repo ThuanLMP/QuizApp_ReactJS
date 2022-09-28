@@ -9,19 +9,21 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useFormik } from 'formik'
 import { SignupSchema, SigninSchema, ForgotPasswordSchema } from '../../utils/helpers/validate'
 
 
+const checkUndefine = (value) => {
+    if(value===undefined){
+        return ''
+    }
+    return value
+}
 
-
-export default function FormInput({ typeForm }) {
-
-    const navigate = useNavigate()
+export default function FormInput({ typeForm, handleValues }) {
     let initValue = {}
     let listInput = []
-
+    let messError = ''
     if (typeForm === 'Sign in') {
         initValue = {
             email: "",
@@ -46,16 +48,16 @@ export default function FormInput({ typeForm }) {
 
     const formik = useFormik({
         initialValues: initValue,
-        onSubmit: values => {
-            console.log(values)
-
-        },
-        onChange: values =>{
-            console.log(values)
+        onSubmit: (values,{resetForm}) => {
+            handleValues(values)
+            resetForm();
         },
         validationSchema: typeForm === 'Sign in' ? SigninSchema : (typeForm=== 'Sign up' ? SignupSchema : ForgotPasswordSchema)
     })
 
+    if(formik.errors.email && formik.touched.email || formik.errors.password && formik.touched.password || formik.errors.name && formik.touched.name){
+        messError = formik.errors.email + '  ' + checkUndefine(formik.errors.password) + '  ' + checkUndefine(formik.errors.name);
+    }
 
 
     return (
@@ -94,16 +96,10 @@ export default function FormInput({ typeForm }) {
                                         value={val === 'email' ? formik.values.email : (val === 'password' ? formik.values.password : formik.values.name)}
                                         autoComplete={val}
                                     />
-
-                                    {formik.errors.email && formik.touched.email && (
-                                        <span className="error">{formik.errors.email}</span>
-                                    )}
-                                    {formik.errors.password && formik.touched.password && (
-                                        <span className="error">{formik.errors.password}</span>
-                                    )}
                                 </>
                             )
                         })}
+                         <span className='error'>{messError}</span>
 
 
                         <Button

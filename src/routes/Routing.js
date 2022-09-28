@@ -5,6 +5,7 @@ import ForgotPasswordPage from "../views/ForgotPassword/ForgotPasswordPage";
 import RegisterPage from "../views/Register/RegisterPage";
 import PlayQuiz from "../views/PlayQuiz/PlayQuizPage";
 import ErrorPage from "../views/NotFound/ErrorPage";
+import GetQuestions from "../views/PlayQuiz/GetQuestions";
 
 export default function Routing() {
     return (
@@ -14,7 +15,7 @@ export default function Routing() {
                 <Route path="/register" element= {<RegisterPage/>}/>
                 <Route path="/forgotpassword" element= {<ForgotPasswordPage/>}/> 
                 <Route path="/play" element= {<PlayQuiz/>}/> 
-                
+                <Route path="/getquestions" element= {<GetQuestions/>}/>
                 <Route path='*' element={<ErrorPage/>} />
             </Routes>
         </Router>
