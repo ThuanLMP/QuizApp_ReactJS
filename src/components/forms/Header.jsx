@@ -48,6 +48,7 @@ export default function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClick}>
                         Quiz App
                     </Typography>
+                   
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>

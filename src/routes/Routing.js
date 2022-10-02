@@ -6,6 +6,8 @@ import RegisterPage from "../views/Register/RegisterPage";
 import PlayQuiz from "../views/PlayQuiz/PlayQuizPage";
 import ErrorPage from "../views/NotFound/ErrorPage";
 import GetQuestions from "../views/PlayQuiz/GetQuestions";
+import ChoiceFeature from "../views/ChoiceFeature/ChoiceFeature";
+import Management from "../views/Management/Management";
 
 export default function Routing() {
     return (
@@ -15,7 +17,9 @@ export default function Routing() {
                 <Route path="/register" element= {<RegisterPage/>}/>
                 <Route path="/forgotpassword" element= {<ForgotPasswordPage/>}/> 
                 <Route path="/play" element= {<PlayQuiz/>}/> 
+                <Route path="/choicefeature" element={<ChoiceFeature/>}/>
                 <Route path="/getquestions" element= {<GetQuestions/>}/>
+                <Route path="/admin/management" element= {<Management/>} />
                 <Route path='*' element={<ErrorPage/>} />
             </Routes>
         </Router>

@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
 const initialState = {
-    questionsPlay: []
+    questionsPlay: [],
+    answersSubmit: [],
 }
 
 export const questionSlice = createSlice({
@@ -11,8 +14,14 @@ export const questionSlice = createSlice({
         updateQuestionsPlay: (state,action) => {
             state.questionsPlay = action.payload
         },
+        setupAnswersSubmit: (state,action) => {
+            state.answersSubmit = action.payload
+        },
+        updateAnswer: (state,action)=> {
+            state.answersSubmit = action.payload
+        }
     }
 })
 
-export const {updateQuestionsPlay} = questionSlice.actions
+export const {updateQuestionsPlay, setupAnswersSubmit, updateAnswer} = questionSlice.actions
 export default questionSlice.reducer

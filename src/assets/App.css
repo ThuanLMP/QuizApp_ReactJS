@@ -83,5 +83,39 @@ html{
 .actionQuestion{
     display: flex;
     justify-content: center;
+    
+}
+.answers {
+    width: 100%;
+    height: 40%;
+    border-radius: 9px;
+}
+.selectAnswer{
+    background-color: #f8c008;
+    height: 60px;
+    width: 470px;
+    border-style: solid;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+}
+.answer {
+    background-color: #a1862e;
+    height: 60px;
+    width: 470px;
+    border-style: solid;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
 }
 
+.imageQuestion {
+    width: 100%;
+    height: 15%;
+}

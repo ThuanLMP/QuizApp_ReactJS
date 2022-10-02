@@ -11,7 +11,7 @@ function LoginPage() {
     const navigate = useNavigate()
     const [stateLogin, setStateLogin] = useState(false)
     const [error, setError] = useState(false)
-    
+
     const handleLogin = async (user, handleClick) => {
         handleClick(true)
         try {
@@ -20,7 +20,13 @@ function LoginPage() {
             setCookies("ACCESS_TOKEN_QUIZ_APP", value.tokens.access_token.access_token)
             setCookies("REFRESH_TOKEN_QUIZ_APP", value.tokens.refresh_token.refresh_token)
             setError(false)
-            navigate('getquestions')
+            if (response.data.data.user.roles.length == 2) {
+                navigate('choicefeature')
+            }
+            else {
+                navigate('getquestions')
+            }
+
 
         } catch (error) {
             setStateLogin(true)
