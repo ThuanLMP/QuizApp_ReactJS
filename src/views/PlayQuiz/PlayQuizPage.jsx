@@ -7,8 +7,6 @@ import { useSelector } from "react-redux";
 
 export default function PlayQuiz() {
     
-    
-    
     return (
         <div className="quizApp">
             <Header/>

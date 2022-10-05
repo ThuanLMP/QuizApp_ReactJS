@@ -9,35 +9,67 @@ const initialState = {
         order: 'ASC',
         size: 5,
         page: 1
-    }
+    },
+    statusAddQuestion: '',
+    questionUpdate: {
+
+    },
+
+
 }
 
 export const questionManagementSlice = createSlice({
     name: 'questionManagement',
     initialState,
     reducers: {
-        updatePage: (state,action) => {
+        updatePage: (state, action) => {
             state.paramsSearch.page = action.payload
         },
-        updateSortFeild: (state,action) => {
+        updateSortFeild: (state, action) => {
             state.paramsSearch.sortField = action.payload
         },
-        updateKeyWord: (state,action) => {
+        updateKeyWord: (state, action) => {
             state.paramsSearch.keyWord = action.payload
         },
-        updateOrder: (state,action) => {
+        updateOrder: (state, action) => {
             state.paramsSearch.order = action.payload
         },
-        updateSize: (state,action) => {
+        updateSize: (state, action) => {
             state.paramsSearch.size = action.payload
+        },
+        addQuestion: (state, action) => {
+            state.questionAdd = action.payload
+        },
+        updateStatusAddQuestion: (state, action) => {
+            state.statusAddQuestion = action.payload
+        },
+        editQuestionUpdate: (state,action) => {
+            state.questionUpdate = action.payload
         }
+        
 
     },
     extraReducers: (builder) => {
         builder.addCase(fetchQuestions.fulfilled, (state, action) => {
             state.listQuestions = action.payload
         })
-    }
+
+        builder.addCase(fetchAddQuestion.fulfilled, (state, action) => {
+            state.statusAddQuestion = action.payload
+        })
+        builder.addCase(fetchAddQuestion.pending, (state, action) => {
+            state.statusAddQuestion = 'pending'
+        })
+        builder.addCase(fetchAddQuestion.rejected, (state, action) => {
+            state.statusAddQuestion = action.payload
+        })
+        builder.addCase(fetchQuestion.pending,(state,action)=>{
+
+        })
+        builder.addCase(fetchQuestion.fulfilled, (state,action)=> {
+            state.questionUpdate = action.payload
+        })
+     }
 })
 
 export const fetchQuestions = createAsyncThunk(
@@ -49,9 +81,36 @@ export const fetchQuestions = createAsyncThunk(
 
         } catch (error) {
             console.log(error)
+            return error.response.status
         }
     }
 
+)
+
+export const fetchAddQuestion = createAsyncThunk(
+    'fetchAddQuestion',
+    async (question) => {
+        try {
+            const response = await questionApi.addNewQuestion(question)
+            return response.status
+        } catch (error) {
+            console.log(error)
+            return error.response.status
+        }
+    }
+)
+
+export const fetchQuestion = createAsyncThunk(
+    'fetchQuestion',
+    async (id) => {
+        try {
+            const response = await questionApi.getQuestion(id)
+            return response.data.data
+        } catch (error) {
+            console.log(error)
+            return error.response.status
+        }
+    }
 )
 
 export const {
@@ -59,7 +118,9 @@ export const {
     updateKeyWord,
     updateSize,
     updateSortFeild,
-    updateOrder
+    updateOrder,
+    updateStatusAddQuestion,
+    editQuestionUpdate
 } = questionManagementSlice.actions
 
 export default questionManagementSlice.reducer

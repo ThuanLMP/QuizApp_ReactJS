@@ -46,6 +46,32 @@ const questionApi = {
                 }
             }
         )
+    },
+    addNewQuestion: (question) => {
+        const url = 'https://quangnh.xyz/v1/questions';
+        return axios.post(
+            url,
+            {
+                title: question.title,
+                thumbnail_link: question.thumbnail_link
+            },
+            {
+                headers: {
+                    'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
+                },  
+            }
+        )
+    },
+    getQuestion: (id) => {
+        const url = `https://quangnh.xyz/v1/questions/${id}`;
+        return axios.get(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
+                },
+            }
+        )
     }
 
 }

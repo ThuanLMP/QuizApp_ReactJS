@@ -12,7 +12,10 @@ const initialState = {
         order: 'ASC',
         size: 5,
         page: 1
-    }
+    },
+    statusAddUser: '',
+    message: '',
+    userTarget: {}
 }
 
 export const userManagementSlice = createSlice({
@@ -40,25 +43,67 @@ export const userManagementSlice = createSlice({
         },
         updateSize: (state,action) => {
             state.paramsSearch.size = action.payload
+        },
+        updateStatusAddUser: (state,action) => {
+            state.statusAddUser = action.payload
         }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state,action)=>{
             state.dataUsers = action.payload
         })
+        builder.addCase(fetchAddUser.fulfilled, (state, action) => {
+            state.message = action.payload.message
+            state.statusAddUser = action.payload.statusCode
+            
+        })
+        builder.addCase(fetchAddUser.pending, (state, action) => {
+            state.statusAddUser = 'pending'
+        })
+        builder.addCase(fetchAddUser.rejected, (state, action) => {
+            state.statusAddUser = action.payload
+        })
+        builder.addCase(fetchUser.fulfilled, (state,action)=>{
+            state.userTarget = action.payload
+        })
+
     }
 })
 
 export const fetchUsers = createAsyncThunk(
     'fetchUsers',
-    async(paramsSearch) => {
+    async (paramsSearch) => {
         try {
-           
             const response = await userApi.getAllUsers(paramsSearch)
-           
             return response.data.data
         } catch (error) {
             console.log(error)
+            return error.response.status
+        }
+    }
+)
+export const fetchAddUser = createAsyncThunk(
+    'fetchAddUser',
+    async (user) => {
+        try {
+            const response = await userApi.addNewUser(user)
+            return response.status
+        } catch (error) {
+            console.log(error)
+            return error.response.data
+        }
+    }
+)
+
+export const fetchUser = createAsyncThunk(
+    'featchUser',
+    async (id) => {
+        try {
+            const response = await userApi.getUserById(id)
+            return response.data.data
+        } catch (error) {
+            console.log(error)
+            return error.response.status
         }
     }
 )
@@ -70,7 +115,8 @@ export const {
     updateRole1,
     updateRole2,
     updateSize,
-    updateSortFeild
+    updateSortFeild,
+    updateStatusAddUser
 } = userManagementSlice.actions
 
 export default userManagementSlice.reducer

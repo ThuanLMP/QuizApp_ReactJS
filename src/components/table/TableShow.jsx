@@ -7,8 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { useSelector } from 'react-redux';
-import { CardMedia } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box, CardMedia } from '@mui/material';
+import { updateStatusShowDetails } from '../../store/managementSlice';
+import { fetchQuestion } from '../../store/questionManagementSlice';
 
 
 const formatDate = (stringDate) => {
@@ -19,13 +21,15 @@ const formatDate = (stringDate) => {
 
 
 
-export default function TableShow({ listHead, inputData, typeTableShow }) {
-
-
-
+export default function TableShow({ listHead, inputData, typeTableShow, openShowDetails }) {
+    const dispatch = useDispatch()
+    const handleClickDetail = async (value) => {
+        await dispatch(fetchQuestion(value.id))
+        openShowDetails()
+    }
     return (
         <TableContainer component={Paper} >
-            <Table sx={{ minWidth: 650, width: 1016 }} aria-label="simple table">
+            <Table sx={{ minWidth: 650, width: '100%' }} aria-label="simple table">
                 <TableHead>
                     <TableRow sx={{ backgroundColor: '#1976D2' }}>
                         {
@@ -39,19 +43,19 @@ export default function TableShow({ listHead, inputData, typeTableShow }) {
                 <TableBody>
                     {
                         typeTableShow === 'question' ? (
-                            inputData.map((question, index) => {
+                            inputData.map((value, index) => {
                                 return (
                                     <TableRow
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                        <TableCell align="left">{question.title}</TableCell>
-                                        <TableCell align="left">{formatDate(question.createdAt)}</TableCell>
+                                        <TableCell align="left">{value.title}</TableCell>
+                                        <TableCell align="left">{formatDate(value.createdAt)}</TableCell>
                                         <TableCell align="left"> <CardMedia
                                             component="img"
                                             height="200"
                                             style={{ borderRadius: 5 }}
-                                            image={question.thumbnail_link}
+                                            image={value.thumbnail_link}
                                             alt="No Image"
                                             sx={{
                                                 display: 'block',
@@ -61,23 +65,23 @@ export default function TableShow({ listHead, inputData, typeTableShow }) {
                                                 height: 'auto',
                                             }}
                                         /></TableCell>
-                                        <TableCell align="left"><RemoveRedEyeIcon /></TableCell>
+                                        <TableCell align="left" onClick={() => handleClickDetail(value)}  ><Box sx={{ cursor: 'pointer' }}><RemoveRedEyeIcon /></Box></TableCell>
                                     </TableRow>
                                 )
                             })) : (
-                                inputData.map((user, index) => {
+                            inputData.map((value, index) => {
                                 return (
                                     <TableRow
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                        <TableCell align="left">{user.email}</TableCell>
-                                        <TableCell align="left">{user.name}</TableCell>
+                                        <TableCell align="left">{value.email}</TableCell>
+                                        <TableCell align="left">{value.name}</TableCell>
                                         <TableCell align="left"> <CardMedia
                                             component="img"
                                             height="200"
                                             style={{ borderRadius: 5 }}
-                                            image={user.avatar_link}
+                                            image={value.avatar_link}
                                             alt="No Image"
                                             sx={{
                                                 display: 'block',
@@ -87,7 +91,8 @@ export default function TableShow({ listHead, inputData, typeTableShow }) {
                                                 height: 'auto',
                                             }}
                                         /></TableCell>
-                                        <TableCell align="left"><RemoveRedEyeIcon /></TableCell>
+
+                                        <TableCell align="left" onClick={() => handleClickDetail(value)} ><Box sx={{ cursor: 'pointer' }}><RemoveRedEyeIcon /></Box></TableCell>
                                     </TableRow>
                                 )
                             }))

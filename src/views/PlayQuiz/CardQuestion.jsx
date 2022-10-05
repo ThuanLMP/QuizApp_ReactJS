@@ -2,8 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Card, CardActions, CardMedia, Grid, Pagination, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setupAnswersSubmit } from "../../store/questionSlice";
-import Answer from "./Answer";
+import Answers from "./Answers";
 
 
 export default function CardQuestion() {
@@ -13,23 +12,6 @@ export default function CardQuestion() {
     const [question, setQuestion] = useState(listQuestion[0])
     const [numberQ, setNumberQ] = useState(1)
     const [loading, setLoading] = useState(false)
-    
-
-    
-    const listAnswers = listQuestion.map((value, index) => {
-        return (
-            {
-                id: value.id,
-                listAnswersSubmit: []
-            }
-        )
-    })
-    const action = setupAnswersSubmit(listAnswers)
-    dispatch(action)
-
-    
-
-
 
 
     const changeQuestion = (numberQuestion) => {
@@ -48,9 +30,9 @@ export default function CardQuestion() {
                     fontSize: 20,
                     marginTop: 3,
                     backgroundColor: '#02F3E5',
-                    width: '70%',
+                    width: '90%',
                     height: '14%',
-                    marginLeft: '15%',
+                    marginLeft: '5%',
                     borderRadius: '5px',
                     display: 'flex',
                     alignItems: 'center',
@@ -78,23 +60,13 @@ export default function CardQuestion() {
                         maxHeight: '110px',
                         width: 'auto',
                         height: 'auto',
-                        marginLeft: '45%'
+                        margin: '0 auto'
                     }}
                 />
             </div>
 
-            <div className="answers">
-                <Grid container spacing={2} sx={{ marginTop: 2 }}>
-                    {question.answers.map((answer) => {
-                        
-                        return (
-                            <Grid key={answer.id} item xs={6} >
-                                <Answer answer={answer} questionId={question.id} numberQ = {numberQ}  />
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </div>
+           <Answers currentQuestion = {question} numberQ = {numberQ}/>
+
             <div className="actionQuestion">
                 <CardActions>
                     <Pagination count={listQuestion.length} color="primary" defaultPage={1} onChange={(event, questionNumber) => {

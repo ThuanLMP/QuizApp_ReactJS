@@ -8,13 +8,22 @@ import { useEffect } from "react";
 import { fetchUsers, updateRole1, updateRole2 } from "../../../store/userManagementSlice";
 import Filter from "../ChildComponent/Filter";
 import { updateKeyWord, updateOrder, updateSize, updateSortFeild, updatePage } from "../../../store/userManagementSlice";
+import { updateStatusShowDetails } from "../../../store/managementSlice";
+import DetailsUser from "./DetailsUser";
 
 export default function UserManagement() {
 
     const dataUsers = useSelector(state => state.userManagement.dataUsers)
     const params = useSelector(state => state.userManagement.paramsSearch)
     const dispatch = useDispatch()
-    
+    const statusShowDetails = useSelector(state => state.management.statusShowDetails)
+     // function handle to TableShow
+
+     const openShowDetails = () => {
+        const action = updateStatusShowDetails(true)
+        dispatch(action)
+    }
+   
 
     useEffect(() => {
         dispatch(fetchUsers(params))
@@ -88,13 +97,16 @@ export default function UserManagement() {
                 <Filter typeForm={'userManagement'} params={params} listHandle={listHandle} />
             </Box>
             <Box component="div" sx={{ margin: '40px 18%', width: '69%' }}>
-                <TableShow listHead={listHead} inputData={dataUsers.result === undefined ? [] : dataUsers.result} typeTableShow={'user'} />
+                <TableShow listHead={listHead} inputData={dataUsers.result === undefined ? [] : dataUsers.result} typeTableShow={'user'}  openShowDetails = {openShowDetails} />
             </Box>
             <Box component="div" sx={{ margin: '40px 43%', width: '68%' }}>
                 <Pagination count={dataUsers.totalPages} color="primary" defaultPage={1} onChange={(event, questionNumber) => {
                     handlePage(questionNumber)
                 }} />
             </Box>
+            
+            {statusShowDetails && <DetailsUser /> }
+            
         </>
     )
 }

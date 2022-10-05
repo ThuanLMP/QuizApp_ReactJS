@@ -1,18 +1,33 @@
-import { useEffect, useState } from "react"
+
 import { useDispatch, useSelector } from "react-redux"
-import { setupAnswersSubmit, updateAnswer } from "../../store/questionSlice"
+import { updateListQuestionsSubmit } from "../../store/questionSlice"
 
 
-
-export default function Answer({ answer, questionId, numberQ }) {
+export default function Answer({numberQ, currentQuestion, answer}) {
 
     const dispatch = useDispatch()
-    const answersSubmit = useSelector(state => state.question.answersSubmit)
-    const classAnswer = 'answer'
-   
+    const listQuestionsSubmit = useSelector(state => state.question.listQuestionsSubmit)
+
+    const classAnswer = 'selectAnswer'
     const handldeClick = (id) => {
-        
-       
+        let newListQuestionsSubmit = [...listQuestionsSubmit]
+        let newArr = [...newListQuestionsSubmit[numberQ - 1].answersSubmitedId]
+        const check = newArr.find(element => element === id)
+        if (check === undefined) {
+            newListQuestionsSubmit[numberQ - 1] = {
+                id: currentQuestion.id,
+                answersSubmitedId: [...newListQuestionsSubmit[numberQ - 1].answersSubmitedId, id]
+            }
+        }
+        else {
+            newListQuestionsSubmit[numberQ - 1] = {
+                id: currentQuestion.id,
+                answersSubmitedId: newArr.filter((value) => value != id)
+            }
+        }
+        const action = updateListQuestionsSubmit(newListQuestionsSubmit)
+        dispatch(action)
+
     }
 
     return (

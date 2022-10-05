@@ -37,7 +37,7 @@ function LoginPage() {
 
     useEffect(() => {
         if (error) {
-            setInterval(() => {
+            setTimeout(() => {
                 setStateLogin(false)
             }, 4000)
         }
@@ -48,7 +48,7 @@ function LoginPage() {
             {
                 stateLogin &&
                 <Box className="alertLogin">
-                    <Alert onClose={() => { }} severity="error">Email or password incorrect</Alert>
+                    <Alert onClose={() => { setStateLogin(false) }} severity="error">Email or password incorrect</Alert>
                 </Box>
             }
             <Grid container component="main" sx={{ height: '100vh' }}>

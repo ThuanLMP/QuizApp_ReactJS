@@ -6,10 +6,13 @@ import { fetchQuestions, updatePage } from "../../../store/questionManagementSli
 import ButtonAdd from "../ChildComponent/ButtonAdd";
 import Filter from "../ChildComponent/Filter";
 import { updateKeyWord, updateOrder, updateSize, updateSortFeild } from "../../../store/questionManagementSlice";
+import DetailsQuestion from "./DetailsQuestion";
+import { updateStatusShowDetails } from "../../../store/managementSlice";
 
 export default function QuestionManagement() {
     const listQ = useSelector(state => state.questionManagement.listQuestions)
     const params = useSelector(state => state.questionManagement.paramsSearch)
+    const statusShowDetails = useSelector(state => state.management.statusShowDetails)
     const dispatch = useDispatch()
 
 
@@ -19,6 +22,7 @@ export default function QuestionManagement() {
         dispatch(fetchQuestions(params))
     }, [params])
 
+    // function handle to Filter
     const handlePage = (questionNumber) => {
         const action = updatePage(questionNumber)
         dispatch(action)
@@ -62,24 +66,30 @@ export default function QuestionManagement() {
         handleChangeSelectOrder: handleChangeSelectOrder,
         handleChangeSize: handleChangeSize
     }
+     
+    // function handle to TableShow
 
-   
+    const openShowDetails = () => {
+        const action = updateStatusShowDetails(true)
+        dispatch(action)
+    }
+    
    
     return (
         <>
-
             <ButtonAdd typeButton={'Add new Question'} />
             <Box component="div" sx={{ margin: '30px 18%', display: 'flex' }}>
                 <Filter typeForm={'questionManagement'} params={params} listHandle={listHandle} />
             </Box>
             <Box component="div" sx={{ margin: '40px 18%', width: '69%' }}>
-                <TableShow inputData={listQ} listHead={listHead} typeTableShow={'question'}  />
+                <TableShow inputData={listQ} listHead={listHead} typeTableShow={'question'} openShowDetails = {openShowDetails}  />
             </Box>
             <Box component="div" sx={{ marginLeft: '43%', width: '57%' }}>
                 <Pagination count={5} color="primary" defaultPage={params.page} onChange={(event, questionNumber) => {
-                    handlePage(questionNumber)
+                    handlePage(questionNumber) 
                 }} />
             </Box>
+            {statusShowDetails && <DetailsQuestion />}
         </>
     )
 }

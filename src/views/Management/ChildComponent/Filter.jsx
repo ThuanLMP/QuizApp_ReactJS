@@ -68,8 +68,6 @@ export default function Filter({ typeForm, params, listHandle }) {
                                     <MenuItem value='id'>ID</MenuItem>
                                     <MenuItem value='email'>Email</MenuItem>
                                     <MenuItem value='name'>Name</MenuItem>
-                                    <MenuItem value='createdAt'>createdAt</MenuItem>
-                                    <MenuItem value='updatedAt'>updatedAt</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>

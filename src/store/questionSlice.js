@@ -1,27 +1,51 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import questionApi from "../api/questionApi";
 
 
 
 const initialState = {
     questionsPlay: [],
-    answersSubmit: [],
+    listQuestionsSubmit: [],
 }
 
 export const questionSlice = createSlice({
     name: 'question',
     initialState,
     reducers: {
-        updateQuestionsPlay: (state,action) => {
+        updateQuestionsPlay: (state, action) => {
             state.questionsPlay = action.payload
         },
-        setupAnswersSubmit: (state,action) => {
-            state.answersSubmit = action.payload
-        },
-        updateAnswer: (state,action)=> {
-            state.answersSubmit = action.payload
+        updateListQuestionsSubmit: (state, action) => {
+            state.listQuestionsSubmit = action.payload
         }
+    
+        
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchQuestionsPlay.fulfilled, (state,action)=>{
+            state.questionsPlay = action.payload
+        })
     }
 })
 
-export const {updateQuestionsPlay, setupAnswersSubmit, updateAnswer} = questionSlice.actions
+
+
+export const fetchQuestionsPlay = createAsyncThunk(
+    'fetchQuestionsPlay',
+    async (totalQ) => {
+        try {
+            const response = await questionApi.getQuestionsPlay(totalQ)
+            return response.data.data
+        } catch (error) {
+            console.log(error)
+            return error.response.status
+        }
+    }
+)
+
+export const {
+    updateQuestionsPlay,
+    updateListQuestionsSubmit,
+     } = questionSlice.actions
+
 export default questionSlice.reducer

@@ -5,16 +5,18 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import { getCookies, removeCookies } from "../../api/axiosInstance";
 import logoutApi from "../../api/logoutApi";
 
-export default function Header() {
+export default function Header({ typeHeader }) {
     const navigate = useNavigate()
-    const handleClick = () => {
+    const handleClickQuizApp = () => {
         navigate('/getquestions')
     }
-
+    const handleClickAdmin = () => {
+        navigate('/admin/management')
+    }
     const handleLogout = async () => {
         try {
             const refresh_token = getCookies('REFRESH_TOKEN_QUIZ_APP')
-            
+
             if ((getCookies('REFRESH_TOKEN_QUIZ_APP') === undefined) && (getCookies('ACCESS_TOKEN_QUIZ_APP') === undefined)) {
                 navigate('/')
             }
@@ -45,10 +47,12 @@ export default function Header() {
                     >
                         <QuizIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClick}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickQuizApp}>
                         Quiz App
                     </Typography>
-                   
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickAdmin}>
+                        Admin
+                    </Typography>
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>

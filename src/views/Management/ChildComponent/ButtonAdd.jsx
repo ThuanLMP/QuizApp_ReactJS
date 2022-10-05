@@ -1,8 +1,19 @@
 import { Fab, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from "react-router-dom";
 
 export default function ButtonAdd({ typeButton }) {
+    const navigate = useNavigate()
+
+    const handleClick =()=>{
+        if(typeButton==='Add new Question'){
+            navigate('/admin/management/addQuestion')
+        }
+        else{
+            navigate('/admin/management/addUser')
+        }
+    }
 
     return (
 
@@ -17,7 +28,7 @@ export default function ButtonAdd({ typeButton }) {
                     borderRadius: '5px',
                     cursor: 'pointer'
                 }}>
-                <Box component='div' sx={{display: 'flex'}}>
+                <Box component='div' sx={{display: 'flex'}} onClick= {handleClick}>
                     <AddIcon sx={{marginTop: '4%'}}/>
                     <Typography sx={{ margin: '7px', fontWeight: '600' }}>
                         {typeButton}

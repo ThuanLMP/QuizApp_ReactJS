@@ -26,11 +26,11 @@ export default function FormInput({ typeForm, handleValues }) {
     let messError = ''
 
     const [loading, setLoading] = React.useState(false);
-    
+
     const handleClick = (value) => {
         setLoading(value);
     }
-    
+
     if (typeForm === 'Sign in') {
         initValue = {
             email: "",
@@ -56,8 +56,7 @@ export default function FormInput({ typeForm, handleValues }) {
     const formik = useFormik({
         initialValues: initValue,
         onSubmit: (values, { resetForm }) => {
-            
-            handleValues(values,handleClick)
+            handleValues(values, handleClick)
             resetForm();
         },
         validationSchema: typeForm === 'Sign in' ? SigninSchema : (typeForm === 'Sign up' ? SignupSchema : ForgotPasswordSchema)
@@ -86,12 +85,14 @@ export default function FormInput({ typeForm, handleValues }) {
                 <Typography component="h1" variant="h5">
                     {typeForm}
                 </Typography>
+
                 <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
 
                     {listInput.map((val) => {
                         return (
                             <>
-                                <TextField key={val}
+                                <TextField
+                                    key={val}
                                     margin="normal"
                                     required
                                     fullWidth
@@ -114,13 +115,13 @@ export default function FormInput({ typeForm, handleValues }) {
                         loadingPosition="end"
                         variant="contained"
                         type="submit"
-                        sx={{mt:3,mb:2}}
+                        sx={{ mt: 3, mb: 2 }}
                         fullWidth
-                        
+
                     >
                         {typeForm}
                     </LoadingButton>
-                    
+
 
                 </Box>
 

@@ -8,25 +8,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import questionApi from '../../api/questionApi';
 import Header from '../../components/forms/Header';
-import { updateQuestionsPlay } from '../../store/questionSlice';
+import { setupAnswersSubmit, updateListQuestionsSubmit, updateQuestionsPlay } from '../../store/questionSlice';
 
 
 export default function GetQuestions() {
     const navigate = useNavigate()
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
 
     const getQuestions = async (totalQ) => {
         setLoading(true)
         try {
+
+            // call api get data question play
             const response = await questionApi.getQuestionsPlay(totalQ)
-            const action = updateQuestionsPlay(response.data.data)
-            dispatch(action)
+            // set data question play to store
+            const action1 = updateQuestionsPlay(response.data.data)
+            dispatch(action1)
+
+            // set data listQuestionsSubmit to store
+            const listQuestionsSubmit = response.data.data.map((value) => {
+                return {
+                    id: value.id,
+                    answersSubmitedId: []
+                }
+            })
+            
+            const action2 = updateListQuestionsSubmit(listQuestionsSubmit)
+            dispatch(action2)
+
+            // navigate to play screen
             navigate('../play')
+
         } catch (error) {
             console.log(error)
         }
-       setLoading(false)
+        setLoading(false)
     }
 
     const formik = useFormik({
@@ -42,7 +59,7 @@ export default function GetQuestions() {
     return (
 
         <div>
-            <Header/>
+            <Header />
             <Box textAlign='center' mt={5}>
                 <Typography variant="h5" component="h2" mt={7} mb={6}>
                     Enter number Questions you want play ?
@@ -66,19 +83,19 @@ export default function GetQuestions() {
                             }
                         }}
                     />
-                     <LoadingButton
+                    <LoadingButton
                         loading={loading}
                         loadingPosition="end"
                         variant="contained"
                         type="submit"
-                        sx={{mt:3,mb:2}}
+                        sx={{ mt: 3, mb: 2 }}
                         fullWidth
-                        
+
                     >
                         play
                     </LoadingButton>
-                    
-                    
+
+
                 </Box>
 
             </Box>
