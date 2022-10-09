@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 import QuizIcon from '@mui/icons-material/Quiz';
 import { getCookies, removeCookies } from "../../api/axiosInstance";
 import logoutApi from "../../api/logoutApi";
+import { useSelector } from "react-redux";
+import { LocalStorage } from "../../utils/helpers/actionLocalStorage";
 
 export default function Header({ typeHeader }) {
+    const userLocal = LocalStorage.getUser()
+    if(userLocal.roles.length === 2){
+        typeHeader='admin'
+    }
     const navigate = useNavigate()
     const handleClickQuizApp = () => {
         navigate('/getquestions')
@@ -50,9 +56,11 @@ export default function Header({ typeHeader }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickQuizApp}>
                         Quiz App
                     </Typography>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickAdmin}>
+                    {typeHeader === 'admin' ? (<Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickAdmin}>
                         Admin
                     </Typography>
+                    ) : (<></>)}
+
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>

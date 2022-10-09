@@ -1,0 +1,1 @@
+export {TableShow as default} from './TableShow'

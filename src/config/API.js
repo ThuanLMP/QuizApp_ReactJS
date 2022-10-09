@@ -1,0 +1,1 @@
+export const urlApi = 'https://quangnh.xyz/v1'

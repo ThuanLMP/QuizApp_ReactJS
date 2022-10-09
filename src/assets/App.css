@@ -115,6 +115,42 @@ html{
     cursor: pointer;
 }
 
+.answerCorrectSelect {
+    background-color: #0de92a;
+    height: 60px;
+    width: 470px;
+    border-style: solid;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+}
+.answerIncorrect {
+    background-color: #f30a1d;
+    height: 60px;
+    width: 470px;
+    border-style: solid;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+}
+.answerCorrect{
+    background-color: #0d11e9;
+    height: 60px;
+    width: 470px;
+    border-style: solid;
+    border-radius: 8px;
+    margin: 0 auto;
+    font-weight: 600;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+}
 .imageQuestion {
     width: 100%;
     height: 15%;

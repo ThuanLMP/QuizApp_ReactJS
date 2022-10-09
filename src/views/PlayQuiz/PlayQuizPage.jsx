@@ -1,8 +1,8 @@
 
 import { Container } from "@mui/system";
-import CardQuestion from "./CardQuestion";
-import Header from "../../components/forms/Header";
-import { useSelector } from "react-redux";
+import CardQuestion from "./ChildComponent/CardQuestion";
+import Header from "../../components/header/Header";
+
 
 
 export default function PlayQuiz() {

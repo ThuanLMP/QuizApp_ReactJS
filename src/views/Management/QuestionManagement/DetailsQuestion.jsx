@@ -7,16 +7,51 @@ import { editQuestionUpdate, fetchQuestion } from "../../../store/questionManage
 import Checkbox from '@mui/material/Checkbox';
 import { Box } from "@mui/system";
 import AddIcon from '@mui/icons-material/Add';
+import { LoadingButton } from "@mui/lab";
+import { useFormik } from "formik";
 
 
 export default function DetailsQuestion() {
     const statusShowDetails = useSelector(state => state.management.statusShowDetails)
+    const question = useSelector(state => state.questionManagement.questionUpdate)
     const dispatch = useDispatch()
+    const formik = useFormik(
+        {
+            initialValues: {
+
+            },
+            onSubmit: (value,{resetForm}) => {
+                
+            }
+        }
+    )
+
     const closeShowDetails = () => {
         const action = updateStatusShowDetails(false)
         dispatch(action)
     }
-    const question = useSelector(state => state.questionManagement.questionUpdate)
+
+
+    const addNewAnswer = () => {
+        const newAnswer = {
+            content: '',
+            is_correct: false
+        }
+        const newQuestion = { ...question }
+        newQuestion.answers = [...newQuestion.answers, newAnswer]
+        const action = editQuestionUpdate(newQuestion)
+        dispatch(action)
+
+    }
+
+    const deleteAnswer = (index) => {
+        const newQuestion = { ...question }
+        const newArr = [...question.answers]
+        newArr.splice(index, 1)
+        newQuestion.answers = [...newArr]
+        const action = editQuestionUpdate(newQuestion)
+        dispatch(action)
+    }
 
     return (
         <>
@@ -77,31 +112,37 @@ export default function DetailsQuestion() {
                                         fullWidth
                                         variant="standard"
                                         defaultValue={answer.content}
+                                    />
+                                    <IconButton
+                                        onClick={() => deleteAnswer(index)}
+                                        aria-label="close"
+                                        sx={{
+                                            color: (theme) => theme.palette.grey[500],
+                                        }}
                                     >
-                                    </TextField>
+                                        <CloseIcon />
+                                    </IconButton>
                                 </Box>
                             )
                         })}
-                    <Box component='div' textAlign='center'>
-                        <Button variant="outlined" startIcon={<AddIcon />} onClick={() => {
-                            const newAnswer = {
-                                content: '',
-                                is_correct: false
-                            }
-                            const newQuestion = { ...question }
-                            newQuestion.answers = [...newQuestion.answers, newAnswer]
-                            const action = editQuestionUpdate(newQuestion)
-                            dispatch(action)
 
-                        }}> Add Answer</Button>
+                    <Box component='div' textAlign='center'>
+                        <Button variant="outlined" startIcon={<AddIcon />} onClick={addNewAnswer}> Add Answer</Button>
                     </Box>
 
+                    <LoadingButton
+                        loading={false}
+                        loadingPosition="end"
+                        variant="contained"
+                        type="submit"
+                        sx={{ mt: 3, mb: 2 }}
+                        fullWidth
+                    >
+                        Save
+                    </LoadingButton>
                 </DialogContent>
 
-                <DialogActions>
-                    <Button>Delete Question</Button>
-                    <Button>Save</Button>
-                </DialogActions>
+
             </Dialog>
 
         </>

@@ -6,6 +6,7 @@ import questionApi from "../api/questionApi";
 const initialState = {
     questionsPlay: [],
     listQuestionsSubmit: [],
+    resultPlay: [],
 }
 
 export const questionSlice = createSlice({
@@ -17,6 +18,9 @@ export const questionSlice = createSlice({
         },
         updateListQuestionsSubmit: (state, action) => {
             state.listQuestionsSubmit = action.payload
+        },
+        updateResultPlay: (state,action) => {
+            state.resultPlay = action.payload
         }
     
         
@@ -46,6 +50,7 @@ export const fetchQuestionsPlay = createAsyncThunk(
 export const {
     updateQuestionsPlay,
     updateListQuestionsSubmit,
+    updateResultPlay
      } = questionSlice.actions
 
 export default questionSlice.reducer

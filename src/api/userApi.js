@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getCookies } from "./axiosInstance";
-
+import { urlApi } from "../config";
 const userApi = {
     getAllUsers: (filterUsers) => {
-        const url = 'https://quangnh.xyz/v1/user';
+        const url = `${urlApi}/user`;
         return axios.get(
             url,
             {
@@ -24,7 +24,7 @@ const userApi = {
     },
 
     addNewUser: (user) => {
-        const url = 'https://quangnh.xyz/v1/user';
+        const url = `${urlApi}/user`;
         return axios.post(
             url,
             {
@@ -42,7 +42,7 @@ const userApi = {
     },
 
     getUserById: (id) => {
-        const url = `https://quangnh.xyz/v1/user/${id}`;
+        const url = `${urlApi}/user/${id}`;
         return axios.get(
             url,
             {
@@ -51,6 +51,31 @@ const userApi = {
                 },
             }
         )
+    },
+    deleteUserById: (id) => {
+        const url = `${urlApi}/user/${id}`;
+        return axios.delete(
+            url,
+            {
+                headers: {
+                    'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
+                },
+            }
+        )
+    },
+    updateUserById: (dataUser, id) => {
+        const url = `${urlApi}/user/${id}`;
+        
+        return axios.patch(
+            url,
+            dataUser,
+            {
+                headers: {
+                    'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
+                },
+            }
+        )
+
     }
 
 }

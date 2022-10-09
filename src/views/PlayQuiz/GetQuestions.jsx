@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import questionApi from '../../api/questionApi';
-import Header from '../../components/forms/Header';
+import Header from '../../components/header/Header';
 import { setupAnswersSubmit, updateListQuestionsSubmit, updateQuestionsPlay } from '../../store/questionSlice';
 
 
@@ -30,7 +30,7 @@ export default function GetQuestions() {
             const listQuestionsSubmit = response.data.data.map((value) => {
                 return {
                     id: value.id,
-                    answersSubmitedId: []
+                    answersSubmittedId: []
                 }
             })
             

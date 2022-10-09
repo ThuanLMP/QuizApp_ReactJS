@@ -6,21 +6,38 @@ import FormInput from "../../components/forms/FormInput"
 import Alert from '@mui/material/Alert';
 import Paper from '@mui/material/Paper';
 import { setCookies } from "../../api/axiosInstance";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../store/userSlice";
+import { LocalStorage } from "../../utils/helpers/actionLocalStorage";
 
 function LoginPage() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [stateLogin, setStateLogin] = useState(false)
     const [error, setError] = useState(false)
 
     const handleLogin = async (user, handleClick) => {
         handleClick(true)
+
         try {
             const response = await loginApi.post(user);
             const value = response.data.data
+
+            //set cookie 
             setCookies("ACCESS_TOKEN_QUIZ_APP", value.tokens.access_token.access_token)
             setCookies("REFRESH_TOKEN_QUIZ_APP", value.tokens.refresh_token.refresh_token)
+
+            // set user to store
+            const action = setUser(value.user)
+            dispatch(action)
             setError(false)
-            if (response.data.data.user.roles.length == 2) {
+
+            // set user to localStorage
+
+            LocalStorage.setUser(value.user)
+
+            // navigate if admin -> choicefeature, user -> getquestion
+            if (value.user.roles.length == 2) {
                 navigate('choicefeature')
             }
             else {
@@ -31,6 +48,7 @@ function LoginPage() {
         } catch (error) {
             setStateLogin(true)
             setError(true)
+            console.log(error)
         }
         handleClick(false)
     }

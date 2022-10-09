@@ -1,7 +1,7 @@
 import { Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../../components/forms/Header";
+import Header from "../../../components/header/Header";
 import { fetchAddUser, updateStatusAddUser } from "../../../store/userManagementSlice";
 import FormAdd from "../ChildComponent/FormAdd";
 
@@ -11,8 +11,7 @@ export default function AddUser() {
     const dispatch = useDispatch()
     const statusAddUser = useSelector(state => state.userManagement.statusAddUser)
     const message = useSelector(state => state.userManagement.message)
-    
-    console.log(statusAddUser)
+
     const listFeild = [
         {
             name: 'email',

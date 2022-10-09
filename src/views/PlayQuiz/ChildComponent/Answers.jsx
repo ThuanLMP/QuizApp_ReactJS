@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
-import { updateListQuestionsSubmit } from "../../store/questionSlice"
+import { updateListQuestionsSubmit } from "../../../store/questionSlice"
 import Answer from "./Answer"
 
 

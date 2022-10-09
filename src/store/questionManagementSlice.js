@@ -113,6 +113,19 @@ export const fetchQuestion = createAsyncThunk(
     }
 )
 
+export const deleteQuestion = createAsyncThunk(
+    'deleteQuestion',
+    async (id) => {
+        try {
+            const response = await questionApi.deleteQuestion(id)
+            return response.data.data
+        } catch (error) {
+            console.log(error)
+            return error.response.status
+        }
+    }
+)
+
 export const {
     updatePage,
     updateKeyWord,

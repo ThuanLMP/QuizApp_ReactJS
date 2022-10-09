@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ROUTES from "../config/ROUTES";
 import LoginPage from "../views/Login/LoginPage";
 import ForgotPasswordPage from "../views/ForgotPassword/ForgotPasswordPage";
 import RegisterPage from "../views/Register/RegisterPage";
@@ -10,21 +11,18 @@ import ChoiceFeature from "../views/ChoiceFeature/ChoiceFeature";
 import Management from "../views/Management/Management";
 import AddUser from "../views/Management/UserManagement/AddUser";
 import AddQuestion from "../views/Management/QuestionManagement/AddQuestion";
+import ShowResult from "../views/PlayQuiz/ShowResult/ShowResult";
 
 export default function Routing() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/register" element= {<RegisterPage/>}/>
-                <Route path="/forgotpassword" element= {<ForgotPasswordPage/>}/> 
-                <Route path="/play" element= {<PlayQuiz/>}/> 
-                <Route path="/choicefeature" element={<ChoiceFeature/>}/>
-                <Route path="/getquestions" element= {<GetQuestions/>}/>
-                <Route path="/admin/management" element= {<Management/>} />
-                <Route path="/admin/management/addQuestion" element= {<AddQuestion/>}/>
-                <Route path="/admin/management/addUser" element= {<AddUser/>}/>
-                <Route path='*' element={<ErrorPage/>} />
+                {
+                    ROUTES.map((route, index) => {
+                        return <Route key={index} path={route.path} element={route.component} />
+                    })
+                }
+                <Route path="*" element={<ErrorPage/>} />
             </Routes>
         </Router>
     )

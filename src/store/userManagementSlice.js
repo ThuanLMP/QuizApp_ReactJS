@@ -15,47 +15,48 @@ const initialState = {
     },
     statusAddUser: '',
     message: '',
-    userTarget: {}
+    userTarget: {},
+    
 }
 
 export const userManagementSlice = createSlice({
     name: 'userManagement',
     initialState,
     reducers: {
-        updatePage: (state,action) => {
+        updatePage: (state, action) => {
             state.paramsSearch.page = action.payload
         },
-        updateSortFeild: (state,action) => {
+        updateSortFeild: (state, action) => {
             state.paramsSearch.sortField = action.payload
         },
-        updateRole1: (state,action) => {
+        updateRole1: (state, action) => {
             state.paramsSearch.role1 = action.payload
         },
-        updateRole2: (state,action) => {
+        updateRole2: (state, action) => {
             state.paramsSearch.role2 = action.payload
         }
         ,
-        updateKeyWord: (state,action) => {
+        updateKeyWord: (state, action) => {
             state.paramsSearch.keyWord = action.payload
         },
-        updateOrder: (state,action) => {
+        updateOrder: (state, action) => {
             state.paramsSearch.order = action.payload
         },
-        updateSize: (state,action) => {
+        updateSize: (state, action) => {
             state.paramsSearch.size = action.payload
         },
-        updateStatusAddUser: (state,action) => {
+        updateStatusAddUser: (state, action) => {
             state.statusAddUser = action.payload
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchUsers.fulfilled, (state,action)=>{
+        builder.addCase(fetchUsers.fulfilled, (state, action) => {
             state.dataUsers = action.payload
         })
         builder.addCase(fetchAddUser.fulfilled, (state, action) => {
             state.message = action.payload.message
             state.statusAddUser = action.payload.statusCode
-            
+
         })
         builder.addCase(fetchAddUser.pending, (state, action) => {
             state.statusAddUser = 'pending'
@@ -63,7 +64,7 @@ export const userManagementSlice = createSlice({
         builder.addCase(fetchAddUser.rejected, (state, action) => {
             state.statusAddUser = action.payload
         })
-        builder.addCase(fetchUser.fulfilled, (state,action)=>{
+        builder.addCase(fetchUser.fulfilled, (state, action) => {
             state.userTarget = action.payload
         })
 
@@ -107,6 +108,8 @@ export const fetchUser = createAsyncThunk(
         }
     }
 )
+
+
 
 export const {
     updateKeyWord,

@@ -1,28 +1,41 @@
-import { LoadingButton } from "@mui/lab";
-import { Card, CardActions, CardMedia, Grid, Pagination, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Answers from "./Answers";
+import { Button, Card, CardActions, CardMedia, Grid, Pagination, Typography } from "@mui/material";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
-export default function CardQuestion() {
+const checkAnswer = (answer) => {
+    if (answer.is_submit_correct) {
+        return 'answerCorrectSelect'
+    }
+    else {
+        if (answer.is_correct) {
+            return 'answerCorrect'
+        }
+        if (answer.is_submit_correct === false) {
+            return 'answerIncorrect'
+        }
+    }
+    return 'answer'
+}
 
-    const dispatch = useDispatch()
-    const listQuestion = useSelector(state => state.question.questionsPlay)
-    const [question, setQuestion] = useState(listQuestion[0])
+export default function CardResult() {
+    const resultPlay = useSelector(state => state.question.resultPlay)
+    const [question, setQuestion] = useState(resultPlay.listQuestionChecked[0])
     const [numberQ, setNumberQ] = useState(1)
-    const [loading, setLoading] = useState(false)
-
-
-    const changeQuestion = (numberQuestion) => {
-        setQuestion(listQuestion[numberQuestion - 1])
-        setNumberQ(numberQuestion)
+    const navigate = useNavigate()
+    const changeQuestion = (numberQ) => {
+        setQuestion(resultPlay.listQuestionChecked[numberQ - 1])
+        setNumberQ(numberQ)
+    }
+    const handleClick = () => {
+        navigate('/getquestions')
     }
 
     return (
         <Card sx={{ width: '100%', height: '88vh', textAlign: "center", marginTop: 2 }}>
             <Typography component="h1" variant="h5" marginTop={1}>
-                Question: {numberQ}
+                Total Score: {resultPlay.totalScore}
             </Typography>
 
             <Typography sx={
@@ -45,8 +58,8 @@ export default function CardQuestion() {
                 <Typography component="p" fontWeight={900} marginLeft={2} >
                     {question.title}
                 </Typography>
-
             </Typography>
+
             <div className="imageQuestion">
                 <CardMedia
                     component="img"
@@ -65,26 +78,38 @@ export default function CardQuestion() {
                 />
             </div>
 
-           <Answers currentQuestion = {question} numberQ = {numberQ}/>
+            <div className="answers">
+                <Grid container spacing={2} sx={{ marginTop: 2 }}>
+                    {question.answers.map((answer) => {
+                        const classAnswer = checkAnswer(answer)
+                        return (
+                            <Grid key={answer.id} item xs={6} >
+                                <div className={classAnswer} >
+                                    <p >{answer.content}</p>
+                                </div>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            </div>
 
             <div className="actionQuestion">
                 <CardActions>
-                    <Pagination count={listQuestion.length} color="primary" defaultPage={1} onChange={(event, questionNumber) => {
+                    <Pagination count={resultPlay.listQuestionChecked.length} color="primary" defaultPage={1} onChange={(event, questionNumber) => {
                         changeQuestion(questionNumber)
                     }} />
                 </CardActions>
             </div>
-
-            <LoadingButton
-                loading={loading}
-                loadingPosition="end"
+            <Button
                 variant="contained"
                 type="submit"
                 sx={{ mt: 3, mb: 2 }}
                 fullWidth
+                onClick={handleClick}
             >
-                Submit
-            </LoadingButton>
+                Play Again
+            </Button>
+
         </Card>
     )
 }

@@ -1,0 +1,1 @@
+export {PlayQuizPage as default} from "./PlayQuizPage"
