@@ -1,4 +1,4 @@
-import { Fab, Typography } from "@mui/material";
+import { Fab, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export default function ButtonAdd({ typeButton }) {
     return (
 
         <Box component="div" sx={{ margin: '30px', display: 'flex' }}>
-            <Box componet="div" sx={
+            <Box componet={Paper} sx={
                 {
                     margin: '30px 17%',
                     display: 'flex',
@@ -26,6 +26,7 @@ export default function ButtonAdd({ typeButton }) {
                     backgroundColor: '#1976D2',
                     borderStyle: 'solid',
                     borderRadius: '5px',
+                    borderColor: '#1976D2',
                     cursor: 'pointer'
                 }}>
                 <Box component='div' sx={{display: 'flex'}} onClick= {handleClick}>

@@ -12,7 +12,7 @@ import { useState } from "react";
 
 const configUserUpdate = (drawUser) => {
     const roles = ['user']
-    if(drawUser.isAdmin){
+    if (drawUser.isAdmin) {
         roles.push('admin')
     }
     return {
@@ -30,8 +30,8 @@ export default function DetailsUser() {
         const action = updateStatusShowDetails(false)
         dispatch(action)
     }
-    const [loading,setLoading] = useState(false)
-  
+    const [loading, setLoading] = useState(false)
+
 
     const formik = useFormik({
         initialValues: {
@@ -48,21 +48,21 @@ export default function DetailsUser() {
             setLoading(true)
             const userDataUpdate = configUserUpdate(value)
             try {
-                const response = await userApi.updateUserById(userDataUpdate,user.id)  
-                if(response.status===200){
+                const response = await userApi.updateUserById(userDataUpdate, user.id)
+                if (response.status === 200) {
                     toast.success(response.data.message)
                     closeShowDetails()
 
-                }  
-                else{
+                }
+                else {
                     toast.error(response.data.message)
                 }
             } catch (error) {
                 toast.error('failed')
                 console.log(error)
             }
-            
-            
+
+
         }
     })
 
@@ -87,19 +87,20 @@ export default function DetailsUser() {
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <Box component='form' onSubmit={formik.handleSubmit}><TextField
-                        margin="dense"
-                        id="id"
-                        label="User ID"
-                        type="text"
-                        fullWidth
-                        variant="filled"
-                        value={user.id}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    >
-                    </TextField>
+                    <Box component='form' onSubmit={formik.handleSubmit}>
+                        <TextField
+                            margin="dense"
+                            id="id"
+                            label="User ID"
+                            type="text"
+                            fullWidth
+                            variant="filled"
+                            value={user.id}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        >
+                        </TextField>
 
                         <TextField
                             margin="dense"

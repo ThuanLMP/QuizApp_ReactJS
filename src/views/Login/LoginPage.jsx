@@ -1,20 +1,18 @@
-import { Box, CssBaseline, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { CssBaseline, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import loginApi from "../../api/loginApi";
 import FormInput from "../../components/forms/FormInput"
-import Alert from '@mui/material/Alert';
 import Paper from '@mui/material/Paper';
 import { setCookies } from "../../api/axiosInstance";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../store/userSlice";
 import { LocalStorage } from "../../utils/helpers/actionLocalStorage";
+import { toast } from "react-toastify";
 
 function LoginPage() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [stateLogin, setStateLogin] = useState(false)
-    const [error, setError] = useState(false)
+  
 
     const handleLogin = async (user, handleClick) => {
         handleClick(true)
@@ -22,7 +20,12 @@ function LoginPage() {
         try {
             const response = await loginApi.post(user);
             const value = response.data.data
-
+            if(response.data.statusCode===200){
+                toast.success(response.data.message)
+            }
+            else{
+                toast.error(response.data.message)
+            }
             //set cookie 
             setCookies("ACCESS_TOKEN_QUIZ_APP", value.tokens.access_token.access_token)
             setCookies("REFRESH_TOKEN_QUIZ_APP", value.tokens.refresh_token.refresh_token)
@@ -30,7 +33,6 @@ function LoginPage() {
             // set user to store
             const action = setUser(value.user)
             dispatch(action)
-            setError(false)
 
             // set user to localStorage
 
@@ -46,29 +48,17 @@ function LoginPage() {
 
 
         } catch (error) {
-            setStateLogin(true)
-            setError(true)
+            toast.error("Email or password incorrect !")
             console.log(error)
         }
         handleClick(false)
     }
 
-    useEffect(() => {
-        if (error) {
-            setTimeout(() => {
-                setStateLogin(false)
-            }, 4000)
-        }
-    }, [stateLogin])
+    
 
     return (
         <div className="signIn">
-            {
-                stateLogin &&
-                <Box className="alertLogin">
-                    <Alert onClose={() => { setStateLogin(false) }} severity="error">Email or password incorrect</Alert>
-                </Box>
-            }
+           
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid

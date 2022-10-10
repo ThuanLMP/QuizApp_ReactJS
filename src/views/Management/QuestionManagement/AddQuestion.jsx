@@ -1,14 +1,18 @@
-import { Alert } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../../components/header/Header";
+import { updateStatusShowDetails } from "../../../store/managementSlice";
 import { fetchAddQuestion, updateStatusAddQuestion } from "../../../store/questionManagementSlice";
 import FormAdd from "../ChildComponent/FormAdd";
+import DetailsQuestion from "./DetailsQuestion";
 
 
 export default function AddQuestion() {
     const dispatch = useDispatch()
     const statusAddQuestion = useSelector(state => state.questionManagement.statusAddQuestion)
+    const statusShowDetails = useSelector(state => state.management.statusShowDetails)
+
     const listFeild = [
         {
             name: 'title',
@@ -26,8 +30,10 @@ export default function AddQuestion() {
         thumbnail_link: ''
     }
 
-    const addQuestion = (question) => {
-        dispatch(fetchAddQuestion(question))
+    const addQuestion = async (question) => {
+        await dispatch(fetchAddQuestion(question))
+        const action = updateStatusShowDetails(true)
+            dispatch(action)
     }
 
     return (
@@ -56,6 +62,7 @@ export default function AddQuestion() {
             <Header />
 
             <FormAdd typeForm={'Add new Question'} listFeild={listFeild} innitvalues={innitvalues} handleSubmitForm={addQuestion} statusForm={statusAddQuestion} />
+            {statusShowDetails && <DetailsQuestion />}
         </>
 
     )

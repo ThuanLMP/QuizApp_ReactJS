@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
@@ -60,7 +60,9 @@ export default function GetQuestions() {
 
         <div>
             <Header />
-            <Box textAlign='center' mt={5}>
+            <Box textAlign='center' mt={5} component={Paper} sx={{
+               
+            }}>
                 <Typography variant="h5" component="h2" mt={7} mb={6}>
                     Enter number Questions you want play ?
                 </Typography>

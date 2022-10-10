@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import registerApi from "../../api/registerApi";
 import FormInput from "../../components/forms/FormInput"
 
@@ -6,14 +7,21 @@ import FormInput from "../../components/forms/FormInput"
 function RegisterPage(){
     const navigate = useNavigate()
 
-    const handleRegister = async (user) => {
+    const handleRegister = async (user,handleClick) => {
+        handleClick(true)
         try {
             const response = await registerApi.post(user);
-            const value = response.data.data
+            if(response.data.statusCode===200){
+                toast.success(response.data.message)
+            }
+            else{
+                toast.error(response.data.message)
+            }
             navigate('/')
         } catch (error) {
-            window.alert(error)
+            toast.error(error.response.data.message)
         }
+        handleClick(false)
     }
 
     return(

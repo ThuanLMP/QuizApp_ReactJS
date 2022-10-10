@@ -14,8 +14,6 @@ import { fetchQuestion } from '../../store/questionManagementSlice';
 import { fetchUser } from '../../store/userManagementSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { imgDefault } from '../../config/image';
-import userApi from '../../api/userApi';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalConfirm from '../forms/ModalConfirm';
 
@@ -33,10 +31,10 @@ export default function TableShow({ listHead, inputData, typeTableShow, openShow
     const [stateModal, setStateModal] = useState(false)
     const [value, setValue] = useState({})
     const handleClickDetail = async (value) => {
-        if(typeTableShow==='question'){
+        if (typeTableShow === 'question') {
             await dispatch(fetchQuestion(value.id))
         }
-        else{
+        else {
             await dispatch(fetchUser(value.id))
         }
         openShowDetails()
@@ -51,13 +49,18 @@ export default function TableShow({ listHead, inputData, typeTableShow, openShow
     return (
         <TableContainer component={Paper} >
             <ModalConfirm stateModal={stateModal} setStateModal={setStateModal} value={value} handleClickDelete={handleDelete} />
-            <ToastContainer />
+
             <Table sx={{ minWidth: 650, width: '100%' }} aria-label="simple table">
                 <TableHead>
                     <TableRow sx={{ backgroundColor: '#1976D2' }}>
                         {
                             listHead.map((value) => {
-                                return (<TableCell align="left">{value}</TableCell>)
+                                return (
+                                    <TableCell align="left" style={{
+                                        fontSize: '18px',
+                                        fontWeight: 'bold'
+                                    }}>{value}</TableCell>
+                                )
                             })
                         }
 

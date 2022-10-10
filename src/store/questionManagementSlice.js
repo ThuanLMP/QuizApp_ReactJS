@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import answerApi from "../api/answerApi";
 import questionApi from "../api/questionApi";
 
 const initialState = {
@@ -12,7 +13,10 @@ const initialState = {
     },
     statusAddQuestion: '',
     questionUpdate: {
-
+        id: '',
+        title: '',
+        thumbnail_link: '',
+        answers: []
     },
 
 
@@ -45,6 +49,9 @@ export const questionManagementSlice = createSlice({
         },
         editQuestionUpdate: (state,action) => {
             state.questionUpdate = action.payload
+        },
+        updateTitleQuetionUpdate: (state,action) => {
+            state.questionUpdate.title = action.payload
         }
         
 
@@ -69,6 +76,7 @@ export const questionManagementSlice = createSlice({
         builder.addCase(fetchQuestion.fulfilled, (state,action)=> {
             state.questionUpdate = action.payload
         })
+        
      }
 })
 
@@ -126,6 +134,22 @@ export const deleteQuestion = createAsyncThunk(
     }
 )
 
+export const addAnsToQuestion = createAsyncThunk(
+    'addAnsToQuestion',
+    async(dataAnswer) => {
+       
+        try{
+            const response = await answerApi.addAnswer(dataAnswer)
+            console.log(response)
+            return response.data.data
+        }
+        catch(error){
+            console.log(error)
+            return error.response.status
+        }
+    }
+)
+
 export const {
     updatePage,
     updateKeyWord,
@@ -133,7 +157,8 @@ export const {
     updateSortFeild,
     updateOrder,
     updateStatusAddQuestion,
-    editQuestionUpdate
+    editQuestionUpdate,
+    updateTitleQuetionUpdate
 } = questionManagementSlice.actions
 
 export default questionManagementSlice.reducer

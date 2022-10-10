@@ -4,6 +4,8 @@ import { LoadingButton } from "@mui/lab";
 import { Checkbox, FormControlLabel, Paper, TextField, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { updateStatusShowDetails } from "../../../store/managementSlice";
 import { addNewQuestionSchema, addNewUserSchema } from "../../../utils/helpers/validate";
 
 
@@ -28,7 +30,7 @@ const configUser = (rawUser) => {
     return user
 }
 export default function FormAdd({ typeForm, listFeild, innitvalues, handleSubmitForm, statusForm }) {
-
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: innitvalues,
         onSubmit: (value, { resetForm }) => {
@@ -37,6 +39,7 @@ export default function FormAdd({ typeForm, listFeild, innitvalues, handleSubmit
                 result = configUser(value)
             }
             handleSubmitForm(result)
+            
             //resetForm()
         },
         validationSchema: typeForm === 'Add new Question' ? addNewQuestionSchema : addNewUserSchema
@@ -67,12 +70,12 @@ export default function FormAdd({ typeForm, listFeild, innitvalues, handleSubmit
 
                 <Box component='form' mt={5} onSubmit={formik.handleSubmit}>
                     {
-                        listFeild.map((value) => {
+                        listFeild.map((value, index) => {
                             return (
                                 <>
                                     {
                                         value.type === 'checkbox' ?
-                                            <Box component='div' sx={{ width: '50%', marginLeft: '25%' }} key={value.name}>
+                                            <Box component='div' sx={{ width: '50%', marginLeft: '25%' }} key={index}>
 
                                                 <FormControlLabel
                                                     control={<Checkbox checked={formik.values.isAdmin} />}
@@ -91,7 +94,7 @@ export default function FormAdd({ typeForm, listFeild, innitvalues, handleSubmit
 
                                             </Box>
                                             :
-                                            <Box component='div' sx={{ width: '50%', marginLeft: '25%' }} key={value.name}>
+                                            <Box component='div' sx={{ width: '50%', marginLeft: '25%' }} key={index}>
                                                 <TextField
                                                     key={value.name}
                                                     margin='normal'

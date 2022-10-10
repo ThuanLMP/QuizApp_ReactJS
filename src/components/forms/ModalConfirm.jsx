@@ -26,7 +26,7 @@ export default function ModalConfirm({stateModal,setStateModal,value,handleClick
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Hành động này sẽ xóa vĩnh viễn và không thể khôi phục ?"}
+                    {"Hành động này sẽ xóa vĩnh viễn và không thể khôi phục !"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">

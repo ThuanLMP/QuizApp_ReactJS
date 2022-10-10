@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/Header";
@@ -19,12 +19,20 @@ export default function ChoiceFeature() {
     return (
         <div>
             <Header />
-            <Box textAlign='center' mt={5}>
-                <Typography variant="h5" component="h2" mt={7} mb={6}>
+            
+            <Box component={Paper} textAlign='center' sx={{
+                width: '30%',
+                padding: '5% 5%',
+                backgroundColor: '#F6F7FB',
+                border: 'solid 1px',
+                marginTop: '4%',
+                marginLeft: '32%'
+            }}>
+                <Typography variant="h5" component="h2" mt={2} mb={6}>
                     Choice Feature You Want ?
                 </Typography>
-                <Button onClick={handleClickPlay}>Play</Button>
-                <Button onClick={handleClickManagement}>Management</Button>
+                <Button variant="contained" fullWidth onClick={handleClickPlay}>Play</Button>
+                <Button variant="contained" sx={{marginTop: '5px'}} fullWidth onClick={handleClickManagement}>Management</Button>
             </Box>
         </div>
     )

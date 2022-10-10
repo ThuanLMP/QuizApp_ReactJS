@@ -24,14 +24,14 @@ export default function UserManagement() {
 
     const handleClickDelete = async (value) => {
         const response = await userApi.deleteUserById(value.id)
-        if(response.data.statusCode===200){
-            setStateDelete(setStateDelete=>!setStateDelete)
+        if (response.data.statusCode === 200) {
+            setStateDelete(setStateDelete => !setStateDelete)
             toast.success(response.data.message)
         }
-        else{
+        else {
             toast.error(response.data.message)
         }
-        
+
     }
 
     const statusShowDetails = useSelector(state => state.management.statusShowDetails)
@@ -45,7 +45,7 @@ export default function UserManagement() {
 
     useEffect(() => {
         dispatch(fetchUsers(params))
-    }, [params,stateDelete,statusShowDetails])
+    }, [params, stateDelete, statusShowDetails])
 
 
 
@@ -115,11 +115,12 @@ export default function UserManagement() {
                 <Filter typeForm={'userManagement'} params={params} listHandle={listHandle} />
             </Box>
             <Box component="div" sx={{ margin: '40px 18%', width: '69%' }}>
-                <TableShow 
-                listHead={listHead} 
-                inputData={dataUsers.result === undefined ? [] : dataUsers.result} 
-                typeTableShow={'user'} openShowDetails={openShowDetails}  
-                handleDelete={handleClickDelete} />
+                <TableShow
+                    listHead={listHead}
+                    inputData={dataUsers.result === undefined ? [] : dataUsers.result}
+                    typeTableShow={'user'} 
+                    openShowDetails={openShowDetails}
+                    handleDelete={handleClickDelete} />
             </Box>
             <Box component="div" sx={{ margin: '40px 43%', width: '68%' }}>
                 <Pagination count={dataUsers.totalPages} color="primary" defaultPage={1} onChange={(event, questionNumber) => {

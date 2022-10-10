@@ -57,7 +57,7 @@ export default function FormInput({ typeForm, handleValues }) {
         initialValues: initValue,
         onSubmit: (values, { resetForm }) => {
             handleValues(values, handleClick)
-            resetForm();
+            //resetForm();
         },
         validationSchema: typeForm === 'Sign in' ? SigninSchema : (typeForm === 'Sign up' ? SignupSchema : ForgotPasswordSchema)
     })

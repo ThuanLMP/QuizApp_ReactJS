@@ -31,7 +31,7 @@ export default function QuestionManagement() {
     }
     useEffect(() => {
         dispatch(fetchQuestions(params))
-    }, [params, stateDelete])
+    }, [params, stateDelete, listQ])
 
     // function handle to Filter
     const handlePage = (questionNumber) => {

@@ -9,8 +9,8 @@ import { LocalStorage } from "../../utils/helpers/actionLocalStorage";
 
 export default function Header({ typeHeader }) {
     const userLocal = LocalStorage.getUser()
-    if(userLocal.roles.length === 2){
-        typeHeader='admin'
+    if (userLocal.roles.length === 2) {
+        typeHeader = 'admin'
     }
     const navigate = useNavigate()
     const handleClickQuizApp = () => {
@@ -41,7 +41,7 @@ export default function Header({ typeHeader }) {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 0 }}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -53,12 +53,16 @@ export default function Header({ typeHeader }) {
                     >
                         <QuizIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickQuizApp}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 0.05 }} onClick={handleClickQuizApp}>
                         Quiz App
                     </Typography>
-                    {typeHeader === 'admin' ? (<Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickAdmin}>
-                        Admin
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 0.05 }} onClick={handleClickQuizApp}>
+                        Play
                     </Typography>
+                    {typeHeader === 'admin' ? (
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleClickAdmin}>
+                            Management
+                        </Typography>
                     ) : (<></>)}
 
                     <Button color="inherit" onClick={handleLogout}>Logout</Button>

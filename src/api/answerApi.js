@@ -3,11 +3,11 @@ import { getCookies } from "./axiosInstance";
 import { urlApi } from "../config";
 
 const answerApi = {
-    addAnswer: (answer) => {
+    addAnswer: (dataAnswer) => {
         const url = `${urlApi}/answers`;
         return axios.post(
             url,
-            answer,
+            dataAnswer,
             {
                 headers: {
                     'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
@@ -40,3 +40,4 @@ const answerApi = {
         )
     }
 }
+export default answerApi
