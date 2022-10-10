@@ -29,7 +29,7 @@ function LoginPage() {
             //set cookie 
             setCookies("ACCESS_TOKEN_QUIZ_APP", value.tokens.access_token.access_token)
             setCookies("REFRESH_TOKEN_QUIZ_APP", value.tokens.refresh_token.refresh_token)
-
+            
             // set user to store
             const action = setUser(value.user)
             dispatch(action)

@@ -62,16 +62,13 @@ export const questionManagementSlice = createSlice({
         })
 
         builder.addCase(fetchAddQuestion.fulfilled, (state, action) => {
-            state.statusAddQuestion = action.payload
+            state.questionUpdate = action.payload
         })
         builder.addCase(fetchAddQuestion.pending, (state, action) => {
             state.statusAddQuestion = 'pending'
         })
         builder.addCase(fetchAddQuestion.rejected, (state, action) => {
             state.statusAddQuestion = action.payload
-        })
-        builder.addCase(fetchQuestion.pending,(state,action)=>{
-
         })
         builder.addCase(fetchQuestion.fulfilled, (state,action)=> {
             state.questionUpdate = action.payload
@@ -100,7 +97,9 @@ export const fetchAddQuestion = createAsyncThunk(
     async (question) => {
         try {
             const response = await questionApi.addNewQuestion(question)
-            return response.status
+            const questionUpdate = response.data.data
+            questionUpdate.answers = []
+            return questionUpdate
         } catch (error) {
             console.log(error)
             return error.response.status

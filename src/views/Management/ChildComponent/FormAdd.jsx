@@ -5,7 +5,6 @@ import { Checkbox, FormControlLabel, Paper, TextField, Typography } from "@mui/m
 import { Box, Container } from "@mui/system";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { updateStatusShowDetails } from "../../../store/managementSlice";
 import { addNewQuestionSchema, addNewUserSchema } from "../../../utils/helpers/validate";
 
 

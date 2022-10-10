@@ -1,0 +1,1 @@
+export {ChoiceFeature as default} from './ChoiceFeature'

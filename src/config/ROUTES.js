@@ -5,7 +5,6 @@ import LoginPage from "../views/Login/LoginPage"
 import Management from "../views/Management/Management";
 import AddQuestion from "../views/Management/QuestionManagement/AddQuestion";
 import AddUser from "../views/Management/UserManagement/AddUser";
-import ErrorPage from "../views/NotFound/ErrorPage";
 import GetQuestions from "../views/PlayQuiz/GetQuestions";
 import PlayQuiz from "../views/PlayQuiz/PlayQuizPage";
 import ShowResult from "../views/PlayQuiz/ShowResult/ShowResult";
@@ -26,31 +25,38 @@ const ROUTES = [
     },
     {
         path: '/play',
-        component: <PlayQuiz/>
+        component: <PlayQuiz/>,
+        roles: ['user'] 
     },
     {
         path: '/play/result',
-        component: <ShowResult/>
+        component: <ShowResult/>,
+        roles: ['user']
     },
     {
         path: '/choicefeature',
-        component: <ChoiceFeature/>
+        component: <ChoiceFeature/>,
+        roles: ['user','admin']
     },
     {
         path: '/getquestions',
-        component: <GetQuestions/>
+        component: <GetQuestions/>,
+        roles: ['user']
     },
     {
         path: '/admin/management',
-        component: <Management/>
+        component: <Management/>,
+        roles: ['user','admin']
     },
     {
         path: '/admin/management/addQuestion',
-        component: <AddQuestion/>
+        component: <AddQuestion/>,
+        roles: ['user','admin']
     },
     {
         path: '/admin/management/addUser',
-        component: <AddUser/>
+        component: <AddUser/>,
+        roles: ['user','admin']
     }
 ]
 

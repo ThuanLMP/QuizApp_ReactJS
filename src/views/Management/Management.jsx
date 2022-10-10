@@ -1,6 +1,5 @@
 
 import { Box, Button, ButtonGroup, Pagination, Paper } from "@mui/material";
-import { Container } from "@mui/system";
 import { useState } from "react";
 import Header from "../../components/header/Header";
 import QuestionManagement from "./QuestionManagement/QuestionManagement";
@@ -31,10 +30,5 @@ export default function Management() {
             </Box>
 
         </div>
-
-
-
-
-
     )
 }

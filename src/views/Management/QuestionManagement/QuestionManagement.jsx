@@ -29,9 +29,10 @@ export default function QuestionManagement() {
             toast.error(response.data.message)
         }
     }
+
     useEffect(() => {
         dispatch(fetchQuestions(params))
-    }, [params, stateDelete, listQ])
+    }, [params, stateDelete])
 
     // function handle to Filter
     const handlePage = (questionNumber) => {

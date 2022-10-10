@@ -30,7 +30,7 @@ export default function DetailsQuestion() {
 
             },
             onSubmit: async (values, { resetForm }) => {
-               
+
                 try {
                     const dataAnswer = {
                         content: values.content,
@@ -139,7 +139,8 @@ export default function DetailsQuestion() {
                                         <DetailAnswer answer={answer} index={index} />
                                     </Box>
                                 )
-                            })}
+                            })
+                        }
 
                         <Box component='form' textAlign='center' mt={2} onSubmit={formik.handleSubmit}>
                             <Box component='div' width={500} sx={{

@@ -39,9 +39,7 @@ const questionApi = {
         return axios.get(
             url,
             {
-                headers: {
-                    'Authorization': `bearer ${getCookies('ACCESS_TOKEN_QUIZ_APP')}`
-                },
+                
                 params: {
                     sortField: filterQuestions.sortField,
                     keyWord: filterQuestions.keyWord,

@@ -24,10 +24,12 @@ export default function Header({ typeHeader }) {
             const refresh_token = getCookies('REFRESH_TOKEN_QUIZ_APP')
 
             if ((getCookies('REFRESH_TOKEN_QUIZ_APP') === undefined) && (getCookies('ACCESS_TOKEN_QUIZ_APP') === undefined)) {
+                localStorage.removeItem('user')
                 navigate('/')
             }
             else {
                 await logoutApi.post(refresh_token)
+                localStorage.removeItem('user')
                 removeCookies(['REFRESH_TOKEN_QUIZ_APP', 'ACCESS_TOKEN_QUIZ_APP'])
                 navigate('/')
             }

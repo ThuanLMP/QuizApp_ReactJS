@@ -33,7 +33,7 @@ export default function AddQuestion() {
     const addQuestion = async (question) => {
         await dispatch(fetchAddQuestion(question))
         const action = updateStatusShowDetails(true)
-            dispatch(action)
+        dispatch(action)
     }
 
     return (

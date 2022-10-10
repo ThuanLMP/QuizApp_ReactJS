@@ -88,11 +88,11 @@ export default function FormInput({ typeForm, handleValues }) {
 
                 <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
 
-                    {listInput.map((val) => {
+                    {listInput.map((val,index) => {
                         return (
                             <>
                                 <TextField
-                                    key={val}
+                                    key={index}
                                     margin="normal"
                                     required
                                     fullWidth
